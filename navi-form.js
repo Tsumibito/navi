@@ -26,9 +26,15 @@ document.addEventListener("DOMContentLoaded",function(){
     t.style.transform="translateY(100%)",
     setTimeout(function(){o.style.display="none"},500)
   }
-  function n(e){return e&&e.value.trim().length>=2&&/^[A-Za-zА-Яа-яЁё]+$/.test(e.value.trim())}
-  function r(e){return e&&/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e.value.trim())}
-  function a(){return iti&&iti.isValidNumber()}
+  function n(e){
+    return e&&e.value.trim().length>=2&&/^[A-Za-zА-Яа-яЁё]+$/.test(e.value.trim())
+  }
+  function r(e){
+    return e&&/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e.value.trim())
+  }
+  function q(){
+    return iti&&iti.isValidNumber()
+  }
   var l={"First-Name":false,"Last-Name":false,"Email":false,"Phone":false};
   function validate(){
     var e=document.getElementById("Phone"),
@@ -40,29 +46,41 @@ document.addEventListener("DOMContentLoaded",function(){
         d=0;
     if(l["First-Name"]){
       if(!n(t)){
-        d++,t.style.border="1px solid red";
+        d++,
+        t.style.border="1px solid red";
       }
-      else{t.style.border=""}
+      else{
+        t.style.border=""
+      }
     }
     if(l["Last-Name"]){
       if(!n(a)){
-        d++,a.style.border="1px solid red";
+        d++,
+        a.style.border="1px solid red";
       }
-      else{a.style.border=""}
+      else{
+        a.style.border=""
+      }
     }
     if(l["Email"]){
       if(!r(i)){
-        d++,i.style.border="1px solid red";
+        d++,
+        i.style.border="1px solid red";
       }
-      else{i.style.border=""}
+      else{
+        i.style.border=""
+      }
     }
     if(l["Phone"]){
-      if(!a()){
-        d++,e.style.border="1px solid red";
+      if(!q()){
+        d++,
+        e.style.border="1px solid red";
       }
-      else{e.style.border=""}
+      else{
+        e.style.border=""
+      }
     }
-    if(d > 0 && Object.values(l).some(function(v){return v})){
+    if(d>0 && Object.values(l).some(function(v){return v})){
       s&&(s.style.display="block"),
       c&&(c.disabled=true,c.style.opacity="0.5");
     }
@@ -82,7 +100,7 @@ document.addEventListener("DOMContentLoaded",function(){
     p.forEach(function(e,n){
       if(n.startsWith("utm_")){k.push(n+"="+e)}
     }),
-    h.value=k.join(",");
+    h.value=k.join(",")
   }
   var g=["Phone","First-Name","Last-Name","Email"];
   g.forEach(function(e){
@@ -108,15 +126,15 @@ document.addEventListener("DOMContentLoaded",function(){
           .catch(function(){o("US")})
       },
       utilsScript:"https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"
-    }),
+    });
     f.addEventListener("countrychange",function(){
       f.value=iti.getNumber();
       validate();
-    }),
+    });
     f.addEventListener("input",function(){
       f.value=iti.getNumber();
       validate();
-    })
+    });
   }
   var b=document.getElementById("ip");
   if(b){
