@@ -1,4 +1,4 @@
-<script>
+
 document.addEventListener("DOMContentLoaded",function(){
   function o(){
     var o=document.getElementById("contact_modal_bg"),
@@ -148,4 +148,4 @@ document.addEventListener("DOMContentLoaded",function(){
     y.value=window.location.origin+window.location.pathname
   }
 });
-</script>
+
