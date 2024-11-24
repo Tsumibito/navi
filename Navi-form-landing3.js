@@ -1,6 +1,5 @@
+// v3-2
 document.addEventListener("DOMContentLoaded", function(){
- let scrollPosition = 0;
-
  function isCookieModalVisible() {
    const cookieModal = document.querySelector('.cf_modal');
    return cookieModal && window.getComputedStyle(cookieModal).display !== 'none';
@@ -13,9 +12,6 @@ document.addEventListener("DOMContentLoaded", function(){
    
    if(!modalBg || !modal) return;
    
-   scrollPosition = window.pageYOffset;
-   document.body.style.overflow = 'hidden';
-   
    modalBg.style.display = "flex";
    modalBg.style.opacity = "0";
    modalBg.style.transition = "opacity 0.5s ease";
@@ -24,6 +20,9 @@ document.addEventListener("DOMContentLoaded", function(){
    modal.style.transform = "translateY(100%)";
    modal.style.transition = "transform 0.5s ease";
    setTimeout(function(){ modal.style.transform = "translateY(0)" }, 10);
+   
+   // Предотвращаем прокрутку страницы
+   document.body.style.overflow = 'hidden';
  }
 
  function closeModal(){
@@ -37,11 +36,8 @@ document.addEventListener("DOMContentLoaded", function(){
    
    setTimeout(function(){ 
      modalBg.style.display = "none";
+     // Восстанавливаем прокрутку
      document.body.style.overflow = '';
-     window.scrollTo(0, scrollPosition);
-     if (navigator.userAgent.includes('Chrome') && navigator.userAgent.includes('Mobile')) {
-       location.reload();
-     }
    }, 500);
  }
 
