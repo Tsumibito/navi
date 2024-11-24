@@ -5,45 +5,35 @@ document.addEventListener("DOMContentLoaded", function(){
  }
 
  function reInitKwigaForm() {
-   return new Promise((resolve) => {
-     const modal = document.getElementById("contact-modal");
-     const container = modal.querySelector('[data-kwiga-container]') || modal;
-     
-     // Очищаем контейнер
-     container.innerHTML = '';
-     
-     // Создаем новый контейнер если нужно
-     const formContainer = document.createElement('div');
-     formContainer.setAttribute('data-kwiga-container', '');
-     container.appendChild(formContainer);
-
-     // Создаем новый скрипт
-     const newScript = document.createElement('script');
-     newScript.type = 'module';
-     newScript.src = 'https://kwiga.com/build/js/kwiga-widget.js?t=' + Date.now() + 
-                     '&uuid=8a095c24-4119-47e0-bd17-1f107c313507&producer=https://kwiga.com/';
-     
-     newScript.onload = () => resolve();
-     newScript.onerror = () => resolve();
-     
-     container.appendChild(newScript);
-   });
+   const modal = document.getElementById("contact-modal");
+   
+   // Удаляем все существующие скрипты kwiga
+   const existingScripts = modal.querySelectorAll('script[src*="kwiga.com"]');
+   existingScripts.forEach(script => script.remove());
+   
+   // Очищаем содержимое модального окна до начального состояния
+   modal.innerHTML = '<div class="kwiga-form-container"></div>';
+   
+   // Создаем новый скрипт
+   const newScript = document.createElement('script');
+   newScript.type = 'module';
+   newScript.src = 'https://kwiga.com/build/js/kwiga-widget.js?t=1732351704000&uuid=8a095c24-4119-47e0-bd17-1f107c313507&producer=https://kwiga.com/';
+   modal.appendChild(newScript);
  }
 
- async function openModal(){
+ function openModal(){
    if (isCookieModalVisible()) return;
    var modalBg = document.getElementById("contact_modal_bg"),
        modal = document.getElementById("contact-modal");
    
    if(!modalBg || !modal) return;
    
-   await reInitKwigaForm();
-   
    modalBg.style.display = "flex";
    modalBg.style.opacity = "0";
    modalBg.style.transition = "opacity 0.5s ease";
    setTimeout(function(){ 
      modalBg.style.opacity = "1";
+     reInitKwigaForm();
    }, 10);
    
    modal.style.transform = "translateY(100%)";
@@ -62,10 +52,6 @@ document.addEventListener("DOMContentLoaded", function(){
    
    setTimeout(function(){ 
      modalBg.style.display = "none";
-     const container = modal.querySelector('[data-kwiga-container]');
-     if (container) {
-       container.innerHTML = '';
-     }
    }, 500);
  }
 
