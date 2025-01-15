@@ -1,4 +1,3 @@
-
 (function() {
     function pad(num) {
         return ("0" + num).slice(-2);
